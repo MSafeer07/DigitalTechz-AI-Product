@@ -1,0 +1,16 @@
+name: kit-guard
+on: [push, pull_request]
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Block identifiers and secrets
+        run: |
+          set -e
+          FORBIDDEN='\b[0-9]{12}\b|\b[CUAGD]0[A-Z0-9]{8,}\b|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|sk-ant-[A-Za-z0-9_-]{20,}|xox[abp]-[A-Za-z0-9-]{10,}|Bearer +[A-Za-z0-9._-]{16,}|/Users/[A-Za-z0-9_.-]+'
+          if grep -rInE --exclude-dir=.git --exclude=kit-guard.yml "$FORBIDDEN" . ; then
+            echo "::error::identifier or secret-shaped string found; kits ship placeholders and config lookups only"
+            exit 1
+          fi
+          echo "kit-guard: clean"

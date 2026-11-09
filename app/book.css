@@ -1,0 +1,80 @@
+/* Product Forge book styles: used on screen, in the exported HTML file, in the sample page and in print. */
+.book { background:#fff; color:#111827; border-radius:16px; overflow:hidden; box-shadow:0 30px 80px -30px rgba(0,0,0,.8); font-family:"Source Serif 4", Georgia, "Times New Roman", serif; }
+.book .cover { position:relative; min-height:560px; padding:56px 48px; color:#fff; background:var(--paccent,#7c3aed); background-size:cover; background-position:center; display:flex; flex-direction:column; justify-content:flex-end; font-family:Inter, -apple-system, sans-serif; }
+.book .cover-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; }
+.book .cover-shade { position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.78) 100%); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.book .cover-in { position:relative; z-index:1; }
+.book .cover .kicker { text-transform:uppercase; letter-spacing:.16em; font-size:12px; opacity:.85; font-weight:600 }
+.book .cover h1 { font-size:46px; line-height:1.04; margin:14px 0 10px; letter-spacing:-.025em; max-width:16ch; font-weight:800; text-shadow:0 2px 20px rgba(0,0,0,.35) }
+.book .cover h2 { font-size:19px; font-weight:400; margin:0 0 22px; opacity:.95; max-width:44ch; line-height:1.4; text-shadow:0 1px 12px rgba(0,0,0,.35) }
+.book .cover .tag { font-size:14px; opacity:.9; font-weight:500 }
+.book .cover .by { margin-top:26px; font-size:14px; opacity:.85 }
+.book .body { padding:44px 56px 56px; max-width:780px; }
+.book .body h2 { font-family:Inter, -apple-system, sans-serif; font-size:30px; margin:6px 0 18px; letter-spacing:-.02em; line-height:1.15; font-weight:800 }
+.book .body h3 { font-family:Inter, -apple-system, sans-serif; font-size:19px; margin:30px 0 8px; letter-spacing:-.01em; font-weight:700 }
+.book .body h4 { font-family:Inter, -apple-system, sans-serif; font-size:15px; margin:20px 0 6px; font-weight:700; color:#374151 }
+.book .body p, .book .body li { font-size:17px; line-height:1.7 }
+.book .body p { margin:0 0 14px }
+.book .body ul, .book .body ol { padding-left:24px }
+.book .body li { margin:4px 0 }
+.book .body table { border-collapse:collapse; margin:14px 0; font-size:14.5px; width:100%; font-family:Inter, sans-serif }
+.book .body th { background:#f5f3ff; text-align:left; padding:8px 10px; border:1px solid #e5e7eb; font-weight:600 }
+.book .body td { padding:8px 10px; border:1px solid #e5e7eb; vertical-align:top }
+.book .body blockquote { margin:18px 0; padding:12px 20px; border-left:4px solid var(--paccent,#7c3aed); background:#faf9ff; font-style:italic }
+.book .body code { font-family:ui-monospace, Menlo, monospace; font-size:.9em; background:#f3f4f6; padding:1px 5px; border-radius:4px }
+.book .body input[type=checkbox] { width:16px; height:16px; margin:0 8px 0 -22px; vertical-align:-2px; accent-color:var(--paccent,#7c3aed) }
+.book .body li:has(> input[type=checkbox]) { list-style:none }
+.book .body a { color:#5b21b6 }
+.book .front { margin-bottom:26px }
+.book .contents { columns:2; column-gap:28px; font-family:Inter, sans-serif; font-size:15px } .book .contents li { break-inside:avoid; margin:3px 0 }
+.book .chapter { position:relative; border-top:1px solid #e5e7eb; padding-top:34px; margin-top:38px }
+.book .chnum { font-family:Inter, sans-serif; font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--paccent,#7c3aed); margin-bottom:6px }
+.book figure.hero { margin:0 0 22px; position:relative; border-radius:12px; overflow:hidden; background:#f3f4f6 }
+.book figure.hero img { display:block; width:100%; height:auto }
+.book .bonus { background:#f5f3ff; border-left:4px solid var(--paccent,#7c3aed); padding:12px 16px; border-radius:8px; margin:10px 0; font-size:16px }
+.book .refs { font-family:Inter, sans-serif; font-size:13px; color:#6b7280; word-break:break-all } .book .refs li { margin:6px 0 }
+.book .sell { background:#f9fafb; border:1px dashed #d1d5db; border-radius:12px; padding:22px 24px; margin-top:38px; font-family:Inter, sans-serif } .book .sell h2 { font-size:20px; margin:18px 0 8px } .book .sell p, .book .sell li { font-size:15px }
+.book .rewrite, .book .reimg { font-family:Inter, sans-serif; font-size:12px; background:#f3f0ff; color:#5b21b6; border:1px solid #ddd6fe; border-radius:8px; padding:4px 9px; cursor:pointer }
+.book .rewrite { position:absolute; right:0; top:34px }
+.book .reimg { position:absolute; right:10px; bottom:10px } .book .cover .reimg { right:16px; bottom:16px; top:auto; z-index:2 }
+@media (max-width:640px) { .book .cover, .book .body { padding:28px 22px } .book .cover h1 { font-size:32px } .book .contents { columns:1 } }
+/* designed blocks */
+.book .chnum em { font-style:normal; font-weight:500; letter-spacing:0; text-transform:none; color:#6b7280; margin-left:4px }
+.book .box { border-radius:14px; padding:16px 18px; margin:18px 0; font-family:Inter, sans-serif; background:#f7f5fd; border:1px solid #e9e4fb }
+.book .box p, .book .box li { font-size:15px; line-height:1.55 } .book .box p:last-child { margin-bottom:0 } .book .box ul, .book .box ol { margin:6px 0; padding-left:22px }
+.book .bx-h { display:flex; align-items:center; gap:8px; font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:#4c1d95; margin-bottom:8px }
+.book .bx-i { width:22px; height:22px; border-radius:7px; background:var(--paccent,#7c3aed); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-style:normal }
+.book .box.takeaways { background:linear-gradient(135deg,#f5f3ff,#ede9fe); border-color:#ddd6fe }
+.book .box.steps { background:#fff; border:1px solid #e5e7eb } .book .box.steps ol { counter-reset:st; list-style:none; padding:0 } .book .box.steps ol li { counter-increment:st; position:relative; padding:8px 0 8px 40px; border-top:1px solid #f1f1f4 } .book .box.steps ol li:first-child { border-top:0 } .book .box.steps ol li::before { content:counter(st); position:absolute; left:0; top:8px; width:26px; height:26px; border-radius:50%; background:var(--paccent,#7c3aed); color:#fff; font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center }
+.book .box.checklist { background:#f0fdf4; border-color:#bbf7d0 } .book .box.checklist .bx-i { background:#059669 } .book .box.checklist .bx-h { color:#065f46 } .book .box.checklist li { list-style:none }
+.book .box.example { background:#fffbeb; border-color:#fde68a } .book .box.example .bx-i { background:#d97706 } .book .box.example .bx-h { color:#92400e }
+.book .box.warning { background:#fef2f2; border-color:#fecaca } .book .box.warning .bx-i { background:#dc2626 } .book .box.warning .bx-h { color:#991b1b }
+.book .box.quote { background:transparent; border:0; border-left:4px solid var(--paccent,#7c3aed); border-radius:0; padding:6px 20px; font-family:"Source Serif 4", Georgia, serif } .book .box.quote p { font-size:22px; line-height:1.4; font-style:italic; color:#1f1b3a }
+.book .box.stat { display:flex; gap:18px; align-items:center; background:#111827; color:#fff; border:0 } .book .stat-n { font-size:44px; font-weight:800; letter-spacing:-.03em; line-height:1; color:#c4b5fd; flex:none } .book .stat-w { font-size:15px; line-height:1.45 } .book .stat-s { color:#9ca3af; font-size:12px }
+.book .cmp { display:grid; grid-template-columns:1fr 1fr; gap:12px } .book .cmp-a, .book .cmp-b { border-radius:10px; padding:12px 14px; background:#fff; border:1px solid #e5e7eb } .book .cmp-b { border-color:#bbf7d0; background:#f0fdf4 } .book .cmp-l { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#6b7280; margin-bottom:6px } .book .cmp-b .cmp-l { color:#047857 }
+.book .flow-row { display:flex; align-items:stretch; gap:6px; flex-wrap:wrap } .book .flow-step { flex:1 1 120px; background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:10px 12px 12px; font-size:14px; line-height:1.4; min-width:120px } .book .flow-step span { display:inline-flex; width:22px; height:22px; border-radius:50%; background:var(--paccent,#7c3aed); color:#fff; font-size:12px; font-weight:700; align-items:center; justify-content:center; margin-bottom:6px } .book .flow-arrow { align-self:center; color:#9ca3af; font-size:18px }
+.book .tl { list-style:none; padding:0; margin:0; position:relative } .book .tl::before { content:""; position:absolute; left:9px; top:8px; bottom:8px; width:2px; background:#ddd6fe } .book .tl li { position:relative; padding:4px 0 10px 32px; font-size:15px } .book .tl li::before { content:""; position:absolute; left:4px; top:9px; width:12px; height:12px; border-radius:50%; background:var(--paccent,#7c3aed); border:2px solid #fff; box-shadow:0 0 0 2px #ddd6fe } .book .tl b { display:block; font-family:Inter, sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:#4c1d95 }
+@media (max-width:640px) { .book .cmp { grid-template-columns:1fr } .book .stat-n { font-size:34px } }
+@media print {
+  @page { size:A4; margin:16mm 15mm; @bottom-center { content: counter(page); font-family:Inter, sans-serif; font-size:10px; color:#6b7280 } }
+  @page :first { @bottom-center { content: none } }
+  .book, .book * { -webkit-print-color-adjust:exact; print-color-adjust:exact }
+  .book { border-radius:0; box-shadow:none; max-width:none }
+  .book .cover { min-height:0; height:calc(297mm - 32mm); box-sizing:border-box; overflow:hidden; page-break-after:always; break-after:page; padding:40px 36px }
+  .book .cover h1 { font-size:40px }
+  .book .body { padding:0; max-width:none }
+  .book .front { break-inside:avoid }
+  .book .chapter { page-break-before:always; break-before:page; border:0; margin-top:0; padding-top:0 }
+  .book .sell { page-break-before:always; break-before:page }
+  .book figure.hero { break-inside:avoid; page-break-inside:avoid; max-height:95mm; overflow:hidden; border-radius:8px }
+  .book figure.hero img { width:100%; height:auto; max-height:95mm; object-fit:cover }
+  .book .box, .book table, .book .bonus, .book blockquote { break-inside:avoid; page-break-inside:avoid }
+  .book .box { border:1px solid #d9d3ee } .book .box.stat { background:#111827 } .book .cmp { grid-template-columns:1fr 1fr }
+  .book tr { break-inside:avoid }
+  .book h2, .book h3, .book h4 { break-after:avoid; page-break-after:avoid }
+  .book .body p, .book .body li { orphans:3; widows:3 }
+  .book .contents { columns:2 }
+  .book .rewrite, .book .reimg { display:none }
+  .book .body a { color:inherit; text-decoration:none }
+  .book .refs { font-size:11px }
+}

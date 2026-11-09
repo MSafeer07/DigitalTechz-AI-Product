@@ -1,0 +1,8 @@
+{
+  "name": "digitaltechz",
+  "version": "0.1.0",
+  "description": "Turn what you know into a finished digital product in three clicks: find a profitable pocket from live web research, design the transformation, then write, illustrate and package an ebook, video course or coaching offer with sources cited. Runs in your browser on your own machine with your own FreeLLM API key. Optional pictures with your own Gemini or OpenAI key.",
+  "author": { "name": "safeer" },
+  "homepage": "https://www.skool.com/aisystems",
+  "license": "Proprietary. For AI Systems Society members only."
+}

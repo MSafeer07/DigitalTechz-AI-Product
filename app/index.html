@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DigitalTechz</title>
+<script>
+/* Kit keys: handed over by the local server from your own settings file. */
+(function () { try { var x = new XMLHttpRequest(); x.open('GET', 'kit-keys.json', false); x.send();
+  if (x.status === 200) { var k = JSON.parse(x.responseText) || {}; var st = {}; try { st = JSON.parse(localStorage.getItem('pf_settings') || '{}'); } catch (e) {}
+    if (k.omnirouteKey) localStorage.setItem('pf_key', JSON.stringify(k.omnirouteKey));
+    if (k.geminiKey) { localStorage.setItem('pf_gkey', JSON.stringify(k.geminiKey)); if (!st.imgmodel || st.imgmodel === 'none') st.imgmodel = 'flash'; }
+    if (k.openaiKey) { localStorage.setItem('pf_okey', JSON.stringify(k.openaiKey)); if (!st.imgmodel || st.imgmodel === 'none') st.imgmodel = 'gpt'; }
+    if (k.name && !st.author) st.author = k.name; localStorage.setItem('pf_settings', JSON.stringify(st)); } } catch (e) {} })();
+</script>
+<meta name="description" content="Turn what you know into a finished digital product in three clicks. Runs on your own AI Omniroute API key.">
+<link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="book.css">
+<script>try{const t=JSON.parse(localStorage.getItem("pf_settings")||"{}").theme;if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch{}</script>
+<style>
+  :root { --bg:#0b0912; --panel:#14111d; --panel2:#1b1727; --line:#2a2440; --line2:#3b3160; --ink:#f4f1ff; --muted:#a59cc4; --accent:#8b5cf6; --accent2:#6d28d9; --grad:linear-gradient(135deg,#8b5cf6,#5b21b6); --ok:#34d399; --warn:#fbbf24; --bad:#f87171; --chip-bg:#2b1d55; --chip-ink:#c4b5fd; --live-bg:#0f0c17; --live-ink:#bdb5d9; --track:#2a2440; --hero-a:#1f1633; --hero-b:#120d1f; --hero-line:#3b2d63; --err-bg:#2a1218; --err-ink:#fca5a5; --err-line:#7f1d1d; --ring:rgba(139,92,246,.35); --shadow:0 10px 30px -18px rgba(0,0,0,.7); }
+  :root[data-theme="light"] { --bg:#f4f3f9; --panel:#ffffff; --panel2:#f6f4fb; --line:#e6e2f2; --line2:#cfc8e6; --ink:#16122b; --muted:#6c6488; --chip-bg:#ede9fe; --chip-ink:#5b21b6; --live-bg:#f8f7fc; --live-ink:#3f3a5c; --track:#e6e2f2; --hero-a:#ffffff; --hero-b:#f3f0ff; --hero-line:#ddd6fe; --err-bg:#fef2f2; --err-ink:#b91c1c; --err-line:#fecaca; --ring:rgba(139,92,246,.25); --shadow:0 10px 30px -22px rgba(23,18,60,.25); }
+  @media (prefers-color-scheme: light) { :root:not([data-theme]) { --bg:#f4f3f9; --panel:#ffffff; --panel2:#f6f4fb; --line:#e6e2f2; --line2:#cfc8e6; --ink:#16122b; --muted:#6c6488; --chip-bg:#ede9fe; --chip-ink:#5b21b6; --live-bg:#f8f7fc; --live-ink:#3f3a5c; --track:#e6e2f2; --hero-a:#ffffff; --hero-b:#f3f0ff; --hero-line:#ddd6fe; --err-bg:#fef2f2; --err-ink:#b91c1c; --err-line:#fecaca; --ring:rgba(139,92,246,.25); --shadow:0 10px 30px -22px rgba(23,18,60,.25); } }
+  * { box-sizing:border-box }
+  html, body { margin:0; background:var(--bg); color:var(--ink); font-family:Inter, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.5; -webkit-font-smoothing:antialiased }
+  a { color:var(--accent) }
+  button { font:inherit }
+  svg.i { width:18px; height:18px; flex:none; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round }
+  .app { display:grid; grid-template-columns:248px minmax(0,1fr); min-height:100vh }
+  @media (max-width:860px) { .app { grid-template-columns:1fr } .side { position:static !important; height:auto !important; border-right:0; border-bottom:1px solid var(--line) } .side nav { display:flex; gap:6px; overflow:auto } .side .foot { display:none } }
+  .side { background:var(--panel); border-right:1px solid var(--line); padding:18px 14px; position:sticky; top:0; height:100vh; display:flex; flex-direction:column; gap:6px }
+  .brand { display:flex; align-items:center; gap:10px; padding:4px 6px 16px }
+  .brand img { width:38px; height:38px; border-radius:10px }
+  .brand b { display:block; font-size:16px; letter-spacing:-.01em }
+  .brand span { display:block; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em }
+  .side nav button { display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:none; border:0; color:var(--muted); padding:10px 12px; border-radius:10px; cursor:pointer; font-size:14px; font-weight:500 }
+  .side nav button:hover { background:var(--panel2); color:var(--ink) }
+  .side nav button.on { background:var(--panel2); color:var(--ink); box-shadow:inset 3px 0 0 var(--accent) }
+  .side .foot { margin-top:auto; font-size:12px; color:var(--muted); padding:8px 6px; display:flex; flex-direction:column; gap:10px }
+  .side .foot b { color:var(--ink) }
+  .seg { display:inline-flex; background:var(--panel2); border:1px solid var(--line); border-radius:9px; padding:3px; gap:2px }
+  .seg button { border:0; background:none; color:var(--muted); font-size:12px; padding:5px 9px; border-radius:7px; cursor:pointer; display:inline-flex; align-items:center; gap:5px }
+  .seg button.on { background:var(--panel); color:var(--ink); box-shadow:var(--shadow) }
+  .seg svg.i { width:14px; height:14px }
+  main { padding:22px 28px 60px; min-width:0 }
+  .topbar { display:flex; align-items:center; gap:10px; margin-bottom:18px; flex-wrap:wrap }
+  .topbar h1 { font-size:22px; margin:0; letter-spacing:-.02em; font-weight:700 }
+  .topbar .sub { color:var(--muted); font-size:14px }
+  .spacer { flex:1 }
+  .pill { font-size:12px; color:var(--muted); background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:5px 11px; white-space:nowrap }
+  .pill b { color:var(--ink); font-weight:600 }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:22px; box-shadow:var(--shadow) }
+  .card + .card { margin-top:14px }
+  .card h2 { font-size:17px; margin:0 0 4px; letter-spacing:-.01em }
+  .card .lead { margin:0 0 14px; color:var(--muted); font-size:14px }
+  label { display:block; font-size:12px; color:var(--muted); margin:12px 0 5px; font-weight:500; text-transform:uppercase; letter-spacing:.06em }
+  input[type=text], input[type=password], input[type=number], textarea, select { width:100%; font:inherit; font-size:14px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:var(--panel2); color:var(--ink) }
+  select { appearance:none; -webkit-appearance:none; padding-right:38px; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239a93b8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>"); background-repeat:no-repeat; background-position:right 12px center; cursor:pointer }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(440px, 1fr)); gap:14px; align-items:start } .cards .card { margin:0 } .cards .wide { grid-column:1 / -1 }
+  @media (max-width:960px) { .cards { grid-template-columns:1fr } }
+  input:focus, textarea:focus, select:focus { outline:2px solid var(--accent); outline-offset:0; border-color:transparent }
+  textarea { min-height:120px; resize:vertical }
+  .btn { font-weight:600; padding:11px 18px; border-radius:11px; border:0; cursor:pointer; background:var(--grad); color:#fff; font-size:14px; display:inline-flex; align-items:center; gap:8px; text-decoration:none }
+  .btn.ghost { background:var(--panel2); color:var(--ink); border:1px solid var(--line) }
+  .btn.sm { padding:7px 12px; font-size:13px; border-radius:9px }
+  .btn:disabled { opacity:.45; cursor:not-allowed }
+  .btn:focus-visible, .side nav button:focus-visible { outline:2px solid var(--accent); outline-offset:2px }
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap }
+  .muted { color:var(--muted); font-size:13px }
+  .status { font-size:14px; color:var(--muted); min-height:22px; margin-top:12px; display:flex; align-items:center; gap:8px }
+  .status.busy::before { content:""; width:12px; height:12px; border:2px solid var(--accent); border-right-color:transparent; border-radius:50%; animation:spin .8s linear infinite; flex:none }
+  @keyframes spin { to { transform:rotate(360deg) } }
+  .error { background:var(--err-bg); color:var(--err-ink); border:1px solid var(--err-line); border-radius:10px; padding:10px 12px; margin-top:10px; font-size:14px; white-space:pre-wrap }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px } @media (max-width:760px){ .grid2 { grid-template-columns:1fr } }
+  .grid3 { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px }
+  .tile { background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:16px; cursor:pointer; transition:border-color .15s }
+  .tile:hover { border-color:var(--line2) } .tile.on { border-color:var(--accent); box-shadow:0 0 0 2px var(--ring) }
+  .tile b { display:block; font-size:15px; margin-bottom:4px } .tile p { margin:0; color:var(--muted); font-size:13px }
+  .tile .ico { font-size:22px; margin-bottom:8px }
+  .fmt { position:relative; padding:20px; min-height:170px; display:flex; flex-direction:column }
+  .fmt .icon { width:48px; height:48px; border-radius:14px; background:var(--chip-bg); color:var(--chip-ink); display:flex; align-items:center; justify-content:center; margin-bottom:22px } .fmt .icon svg.i { width:22px; height:22px }
+  .fmt .badge { position:absolute; top:16px; right:16px; font-size:11px; font-weight:600; color:var(--muted); background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:4px 9px }
+  .fmt.on .badge { color:var(--chip-ink); border-color:var(--accent) }
+  .fmt b { font-size:16px; margin-bottom:6px } .fmt p { font-size:13px; line-height:1.5 }
+  .stepper { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:6px; margin:0 0 18px }
+  @media (max-width:1000px) { .stepper { display:flex; overflow:auto; padding-bottom:4px } .stepper div { min-width:120px } }
+  .stepper div { font-size:12px; color:var(--muted); padding:9px 12px; border-radius:10px; background:var(--panel); border:1px solid var(--line); white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+  .stepper div b { display:block; color:var(--ink); font-size:13px; font-weight:600 } .stepper div.on { border-color:var(--accent); box-shadow:0 0 0 2px var(--ring) } .stepper div.done { border-color:var(--ok) } .stepper div.done b::after { content:" ✓"; color:var(--ok) }
+  .zones { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px }
+  .zone { background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:16px; cursor:pointer; position:relative }
+  .zone:hover { border-color:var(--line2) } .zone.on { border-color:var(--accent); box-shadow:0 0 0 2px var(--ring) }
+  .zone .score { position:absolute; top:14px; right:14px; font-weight:800; font-size:18px; color:var(--accent) }
+  .zone .rec { display:inline-block; font-size:11px; background:var(--chip-bg); color:var(--chip-ink); padding:2px 8px; border-radius:6px; margin-bottom:8px; font-weight:600 }
+  .zone h3 { font-size:15px; margin:0 44px 8px 0; line-height:1.35 }
+  .zone p { margin:5px 0; font-size:13px; color:var(--ink) } .zone p b { color:var(--muted); font-weight:500 }
+  .zone a { font-size:12px; text-decoration:none }
+  .clear { display:grid; grid-template-columns:repeat(5,1fr); gap:5px; margin-top:10px }
+  .clear div { font-size:10px; text-align:center; color:var(--muted) } .clear b { display:block; height:5px; border-radius:3px; background:var(--track); overflow:hidden; margin-bottom:3px } .clear b i { display:block; height:100%; background:var(--grad) }
+  .live { font-family:ui-monospace, Menlo, monospace; font-size:12px; color:var(--live-ink); background:var(--live-bg); border:1px solid var(--line); border-radius:10px; padding:10px 12px; max-height:220px; overflow:auto; white-space:pre-wrap }
+  details summary { cursor:pointer; color:var(--muted); font-size:13px; margin:10px 0 6px }
+  table.map { width:100%; border-collapse:collapse; font-size:13px } table.map th, table.map td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top } table.map th { color:var(--muted); font-weight:500; width:64px } table.map thead th { color:var(--ink); font-weight:600 }
+  ol.journey { margin:6px 0 0 18px; padding:0; font-size:13px } ol.journey li { margin:5px 0 } ol.journey b { color:var(--ink) }
+  .chlist { list-style:none; padding:0; margin:6px 0 } .chlist li { display:flex; gap:8px; align-items:center; margin:6px 0 } .chlist input { flex:1 } .chlist button { flex:none }
+  .progress { height:8px; background:var(--track); border-radius:4px; overflow:hidden; margin:10px 0 } .progress i { display:block; height:100%; background:var(--grad); width:0; transition:width .3s }
+  .clist { list-style:none; padding:0; margin:6px 0; font-size:13px; columns:2; column-gap:20px } @media (max-width:760px){ .clist { columns:1 } }
+  .clist li { margin:4px 0; break-inside:avoid; display:flex; gap:6px; align-items:center } .clist li::before { content:"○"; color:var(--muted) } .clist li.done::before { content:"●"; color:var(--ok) } .clist li.busy::before { content:"◐"; color:var(--accent) } .clist li.fail::before { content:"✕"; color:var(--bad) }
+  .swatches { display:flex; gap:8px; margin:6px 0 } .swatches i { width:26px; height:26px; border-radius:8px; cursor:pointer; border:2px solid transparent } .swatches i.on { border-color:var(--ink) }
+  .coverprev { border-radius:14px; padding:26px; color:#fff; min-height:190px; display:flex; flex-direction:column; justify-content:flex-end; background:var(--paccent,#7c3aed); box-shadow:0 20px 50px -20px rgba(0,0,0,.5) }
+  .coverprev .k { text-transform:uppercase; letter-spacing:.14em; font-size:10px; opacity:.85 } .coverprev h3 { font-size:24px; line-height:1.1; margin:8px 0 4px; letter-spacing:-.02em } .coverprev p { margin:0; opacity:.9; font-size:13px }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:14px } .kpi { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:var(--shadow) } .kpi b { display:block; font-size:24px; letter-spacing:-.02em } .kpi span { color:var(--muted); font-size:12px }
+  .welcome { background:linear-gradient(135deg,var(--hero-a),var(--hero-b)); border:1px solid var(--hero-line); border-radius:18px; padding:26px; display:flex; gap:20px; align-items:center; flex-wrap:wrap; margin-bottom:16px; box-shadow:var(--shadow) }
+  .welcome h2 { margin:0 0 4px; font-size:22px; letter-spacing:-.02em } .welcome p { margin:0; color:var(--muted); font-size:14px; max-width:60ch }
+  .plist { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px }
+  .pcard { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; cursor:pointer; box-shadow:var(--shadow) } .pcard:hover { border-color:var(--line2) } .pcard b { display:block; font-size:15px; margin-bottom:4px } .pcard .st { font-size:12px; color:var(--muted) } .pcard .del { float:right; background:none; border:0; color:var(--muted); cursor:pointer; font-size:14px }
+  .bookwrap { display:grid; grid-template-columns:230px minmax(0,1fr); gap:18px } @media (max-width:900px){ .bookwrap { grid-template-columns:1fr } }
+  .toc { position:sticky; top:16px; align-self:start } .toc a { display:block; color:var(--muted); text-decoration:none; font-size:13px; padding:6px 8px; border-radius:8px } .toc a:hover { background:var(--panel2); color:var(--ink) }
+  .imgnote { font-size:12px; color:var(--muted); margin-top:6px }
+  @media print {
+    body { background:#fff } .app { display:block } .side, .topbar, .card, .toc, .actions, .stepper, .status, .error, .welcome, .kpis { display:none !important } main { padding:0; max-width:none } .bookwrap { display:block } #book { display:block !important }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><img src="assets/logo.svg" alt=""><div><b>DigitalTechz</b><span>safeer</span></div></div>
+    <nav>
+      <button data-nav="dashboard" class="on"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> Dashboard</button>
+      <button data-nav="create"><svg class="i" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg> Create</button>
+      <button data-nav="settings"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg> Settings</button>
+    </nav>
+    <div class="foot">
+      <div class="seg" id="theme"><button data-theme="system" title="Match the system"><svg class="i" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg> Auto</button><button data-theme="light" title="Light"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button data-theme="dark" title="Dark"><svg class="i" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div>
+      <div>Spend this session <b id="cost">0.00</b><br>Sources read <b id="nsources">0</b><br><span id="keypill">No key set</span></div>
+    </div>
+  </aside>
+  <main>
+    <!-- DASHBOARD -->
+    <section id="screen-dashboard">
+      <div class="topbar"><h1>Dashboard</h1><span class="sub">Your products, in one place.</span></div>
+      <div class="welcome">
+        <div style="flex:1"><h2>Turn what you know into a product people pay for.</h2><p>Three clicks: find a profitable pocket, map the transformation, write and package the whole thing with real research behind it. Runs on your own AI Omniroute API key, in your browser.</p></div>
+        <div class="row"><button class="btn" id="hero-new">✦ Create a product</button><a class="btn ghost" href="https://www.skool.com/aisystems" target="_blank" rel="noopener">AI Systems Society</a></div>
+      </div>
+      <div class="kpis"><div class="kpi"><b id="st-products">0</b><span>Products</span></div><div class="kpi"><b id="st-words">0</b><span>Words written</span></div><div class="kpi"><b id="st-sources">0</b><span>Sources read</span></div><div class="kpi"><b id="st-spend">0.00</b><span>Spent on your key</span></div></div>
+      <div class="plist" id="plist"></div>
+      <p class="muted" id="plist-empty" style="margin-top:8px">No products yet. Everything you build is saved in this browser.</p>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="screen-settings" style="display:none">
+      <div class="topbar"><h1>Settings</h1></div>
+      <div class="cards">
+      <div class="card">
+        <h2>Your AI Omniroute API key</h2>
+        <p class="lead">Runs on your key, in your browser. Nothing is sent anywhere except to the AI Omniroute API. A full product costs about two dollars on the default model.</p>
+        <input type="password" id="key" placeholder="Enter your AI Omniroute API key...">
+        <div class="row" style="margin-top:10px"><button class="btn sm" id="savekey">Save in this browser</button><button class="btn sm ghost" id="forgetkey">Forget</button><span class="muted" id="keymsg"></span></div>
+        <label>Model</label><select id="model"></select>
+        <label>Default language</label><select id="language"></select>
+        <label>Your name (goes on covers)</label><input type="text" id="author" placeholder="Optional">
+      </div>
+      <div class="card">
+        <h2>Pictures</h2>
+        <p class="lead">Optional. A cover picture and one illustration per chapter, all in one style. You can use <b>Omniroute AI Image</b> (runs directly on your existing AI Omniroute key, no extra keys needed), or use your own Google Gemini or OpenAI key.</p>
+        <label>Image model</label><select id="imgmodel"></select>
+        <label>How many</label><select id="imgscope"><option value="all">Cover and every chapter</option><option value="cover">Cover only</option></select>
+        <div class="grid2"><div><label>Gemini key (Optional)</label><input type="password" id="gkey" placeholder="AIza... (not needed for Omniroute)"></div><div><label>OpenAI key (Optional)</label><input type="password" id="okey" placeholder="sk-... (not needed for Omniroute)"></div></div>
+        <div class="row" style="margin-top:10px"><button class="btn sm" id="saveimg">Save</button><span class="muted" id="imgmsg"></span></div>
+        <p class="imgnote">About 5 cents a chapter picture and 15 cents a cover on Flash; Pro is about 2.5x that; GPT Image 2 about the same as Flash.</p>
+      </div>
+      <div class="card wide"><h2>About</h2><p class="lead" style="margin:0">digitaltechz is a free tool by safeer. It finds a pocket from live web research, designs the product, researches 15 to 20 questions from real sources, writes every chapter with citations, and packages the cover, store page, upsell and product charter. Nothing is stored on a server; your products live in this browser. Use "Export" to keep a copy.</p></div>
+      </div>
+    </section>
+
+    <!-- CREATE -->
+    <section id="screen-create" style="display:none">
+      <div class="topbar"><h1 id="create-title">Create a product</h1><div class="spacer"></div><span class="pill" id="pill-model"></span></div>
+      <div class="stepper" id="steps"></div>
+      <div id="panel"></div>
+      <div class="status" id="status"></div>
+      <div id="error"></div>
+    </section>
+
+    <!-- PRODUCT -->
+    <section id="screen-product" style="display:none">
+      <div class="topbar"><h1 id="book-title">Your product</h1><div class="spacer"></div>
+        <div class="row actions">
+          <button class="btn sm" id="pdf">Download PDF</button>
+          <button class="btn sm ghost" id="copymd">Copy Markdown</button>
+          <button class="btn sm ghost" id="exporthtml">Export HTML</button>
+          <button class="btn sm ghost" id="exportmd">Export .md</button>
+          <button class="btn sm ghost" id="back-create">Edit / rebuild</button>
+        </div>
+      </div>
+      <div class="status" id="pstatus"></div><div id="perror"></div>
+      <div class="bookwrap"><div class="toc card" id="toc"></div><article id="book"></article></div>
+    </section>
+  </main>
+</div>
+
+<script type="module">
+import Anthropic from "https://esm.sh/@anthropic-ai/sdk@0.129.0";
+import { marked } from "https://esm.sh/marked@14.1.3";
+import { createForge, MODELS, FORMATS, IMAGE_MODELS } from "./forge.js";
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+let md = (t) => marked.parse(t || ""); // replaced by the block renderer once a forge exists
+const LANGS = ["English", "Spanish", "French", "German", "Portuguese", "Italian", "Dutch", "Hindi", "Arabic", "Indonesian"];
+const FMT_ICON = {
+  ebook: '<svg class="i" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  course: '<svg class="i" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>',
+  coaching: '<svg class="i" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+};
+const SWATCHES = ["#7c3aed", "#2563eb", "#059669", "#ea580c", "#111827", "#be123c"];
+const STEPS = [["name", "Name"], ["uvz", "Value zone"], ["format", "Format"], ["map", "Transformation"], ["refs", "References"], ["summary", "Summary"], ["build", "Build"]];
+const store = { get: (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
+// One-link setup: {{HOST}}/#claude=sk-ant-...&gemini=AIza...&openai=sk-...&name=the operator&imgmodel=flash
+try { const h = new URLSearchParams(location.hash.slice(1)); if (h.get("claude") || h.get("gemini") || h.get("openai")) {
+  const st = store.get("pf_settings", {});
+  if (h.get("claude")) store.set("pf_key", h.get("claude")); if (h.get("gemini")) { store.set("pf_gkey", h.get("gemini")); st.imgmodel = h.get("imgmodel") || "flash"; } if (h.get("openai")) { store.set("pf_okey", h.get("openai")); st.imgmodel = h.get("imgmodel") || st.imgmodel || "gpt"; }
+  if (h.get("name")) st.author = h.get("name"); store.set("pf_settings", st); history.replaceState(null, "", location.pathname);
+} } catch {}
+let projects = store.get("pf_projects", []);
+let proj = null, forge = null, busy = false;
+
+// ---------- settings ----------
+for (const [id, m] of Object.entries(MODELS)) $("model").append(new Option(m.label, id));
+for (const l of LANGS) $("language").append(new Option(l, l));
+const settings = store.get("pf_settings", { model: "free-stack", language: "English", author: "", imgmodel: "flash", imgscope: "all" });
+for (const [id, m] of Object.entries(IMAGE_MODELS)) $("imgmodel").append(new Option(m.label, id));
+$("imgmodel").value = settings.imgmodel || "none"; $("imgscope").value = settings.imgscope || "all";
+$("gkey").value = store.get("pf_gkey", "") || ""; $("okey").value = store.get("pf_okey", "") || "";
+$("saveimg").onclick = () => { settings.imgmodel = $("imgmodel").value; settings.imgscope = $("imgscope").value; store.set("pf_settings", settings); store.set("pf_gkey", $("gkey").value.trim()); store.set("pf_okey", $("okey").value.trim()); $("imgmsg").textContent = "Saved."; };
+function imageOpts() { return { model: settings.imgmodel || "none", scope: settings.imgscope || "all", omnirouteKey: store.get("pf_key", ""), geminiKey: store.get("pf_gkey", ""), openaiKey: store.get("pf_okey", "") }; }
+function imagesReady() { const o = imageOpts(), m = IMAGE_MODELS[o.model]; if (!m?.provider) return false; if (m.provider === "omniroute") { if (!haveKey()) throw new Error("Enter your AI Omniroute API key first."); return true; } if (m.provider === "gemini" && !o.geminiKey) throw new Error("Add your Gemini key in Settings, or set pictures to none."); if (m.provider === "openai" && !o.openaiKey) throw new Error("Add your OpenAI key in Settings, or set pictures to none."); return true; }
+// Pictures live in IndexedDB (too big for localStorage). Key: projectId + picture slot.
+const mem = new Map(); // fallback when IndexedDB is blocked (private windows): pictures last for the session only
+const imgdb = typeof indexedDB === "undefined" ? { set: async (k, v) => mem.set(k, v), all: async (p) => Object.fromEntries([...mem].filter(([k]) => k.startsWith(p)).map(([k, v]) => [k.slice(p.length), v])), del: async (p) => [...mem.keys()].filter((k) => k.startsWith(p)).forEach((k) => mem.delete(k)) } : { db: null,
+  open() { return this.db || (this.db = new Promise((res, rej) => { const r = indexedDB.open("product-forge", 1); r.onupgradeneeded = () => r.result.createObjectStore("images"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); })); },
+  async set(k, v) { const d = await this.open(); return new Promise((res, rej) => { const t = d.transaction("images", "readwrite"); t.objectStore("images").put(v, k); t.oncomplete = res; t.onerror = () => rej(t.error); }); },
+  async all(prefix) { const d = await this.open(); return new Promise((res, rej) => { const out = {}; const r = d.transaction("images").objectStore("images").openCursor(); r.onsuccess = () => { const c = r.result; if (!c) return res(out); if (String(c.key).startsWith(prefix)) out[String(c.key).slice(prefix.length)] = c.value; c.continue(); }; r.onerror = () => rej(r.error); }); },
+  async del(prefix) { const d = await this.open(); const keys = Object.keys(await this.all(prefix)); return new Promise((res) => { const t = d.transaction("images", "readwrite"); keys.forEach((k) => t.objectStore("images").delete(prefix + k)); t.oncomplete = res; }); },
+};
+// Pictures come back as big PNGs; keep a 1600px JPEG instead (5x smaller in storage and in the export).
+async function shrink(dataUrl) { try { if (typeof OffscreenCanvas === "undefined" && typeof document.createElement("canvas").getContext !== "function") return dataUrl; const img = new Image(); await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = dataUrl; }); const k = Math.min(1, 1600 / Math.max(img.width, img.height)); const c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); const ctx = c.getContext("2d"); if (!ctx) return dataUrl; ctx.drawImage(img, 0, 0, c.width, c.height); const out = c.toDataURL("image/jpeg", 0.85); return out.length > 100 ? out : dataUrl; } catch { return dataUrl; } }
+let bookCSS = ""; fetch("book.css").then((r) => r.text()).then((t) => { bookCSS = t; }).catch(() => {});
+$("model").value = settings.model; $("language").value = settings.language; $("author").value = settings.author || "";
+$("key").value = store.get("pf_key", "") || "";
+for (const id of ["model", "language", "author"]) $(id).onchange = () => { settings[id] = $(id).value; store.set("pf_settings", settings); keyState(); };
+$("savekey").onclick = () => { store.set("pf_key", $("key").value.trim()); $("keymsg").textContent = "Saved."; keyState(); };
+$("forgetkey").onclick = () => { store.set("pf_key", ""); $("key").value = ""; $("keymsg").textContent = "Forgotten."; keyState(); };
+$("key").oninput = keyState;
+function haveKey() { return Boolean($("key").value.trim()); }
+function keyState() { $("keypill").textContent = haveKey() ? "Key set" : "No key set"; $("keypill").style.color = haveKey() ? "var(--ok)" : "var(--muted)"; $("pill-model").textContent = MODELS[$("model").value]?.label || ""; }
+keyState(); $("cost").textContent = "$0.00"; $("st-spend").textContent = "$0.00";
+
+// ---------- theme ----------
+function applyTheme(t) { if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); else document.documentElement.removeAttribute("data-theme"); document.querySelectorAll("#theme button").forEach((b) => b.classList.toggle("on", b.dataset.theme === (t || "system"))); }
+applyTheme(settings.theme || "system");
+document.querySelectorAll("#theme button").forEach((b) => b.onclick = () => { settings.theme = b.dataset.theme; store.set("pf_settings", settings); applyTheme(settings.theme); });
+
+// ---------- nav ----------
+function show(name) { for (const s of ["dashboard", "settings", "create", "product"]) $(`screen-${s}`).style.display = s === name ? "" : "none"; document.querySelectorAll("[data-nav]").forEach((b) => b.classList.toggle("on", b.dataset.nav === name || (name === "product" && b.dataset.nav === "create"))); window.scrollTo({ top: 0 }); if (name === "dashboard") renderDashboard(); }
+document.querySelectorAll("[data-nav]").forEach((b) => b.onclick = () => { if (b.dataset.nav === "create") { if (!proj) newProject(); renderStep(); } show(b.dataset.nav); });
+$("hero-new").onclick = () => { newProject(); renderStep(); show("create"); };
+
+// ---------- projects ----------
+function newProject() { proj = { id: Date.now().toString(36), name: "", language: settings.language, createdAt: Date.now(), updatedAt: Date.now(), step: "name", accent: SWATCHES[0], author: settings.author || "", snap: null }; forge = null; }
+function save() { if (!proj) return; proj.updatedAt = Date.now(); if (forge) proj.snap = forge.snapshot(); const i = projects.findIndex((p) => p.id === proj.id); if (i > -1) projects[i] = proj; else projects.unshift(proj); store.set("pf_projects", projects); renderMeters(); }
+async function loadProject(p) { proj = p; forge = null; if (p.snap) { try { forge = newForge(p.snap); forge.state.images = await imgdb.all(p.id + ":"); } catch (e) { forge = null; alert(e.message); } } if (!forge && !["name", "uvz"].includes(p.step)) p.step = "uvz"; if (p.step === "product" && forge?.state.pkg) { renderBook(); show("product"); } else { renderStep(); show("create"); } }
+function renderDashboard() {
+  const list = $("plist"); list.innerHTML = ""; $("plist-empty").style.display = projects.length ? "none" : "";
+  let words = 0, sources = 0, spend = 0;
+  for (const p of projects) {
+    const s = p.snap; const done = s?.pkg; const w = s?.sections?.filter(Boolean).reduce((a, x) => a + x.body.split(/\s+/).length, 0) || 0; words += w; sources += s?.sources?.length || 0; spend += p.cost || 0;
+    const c = document.createElement("div"); c.className = "pcard";
+    c.innerHTML = `<button class="del" title="Delete">✕</button><b>${esc(p.name || s?.blueprint?.titles?.[0] || "Untitled")}</b><div class="st">${done ? "Finished" : "In progress: " + (STEPS.find((x) => x[0] === p.step)?.[1] || p.step)} · ${w ? w.toLocaleString() + " words · " : ""}${new Date(p.updatedAt).toLocaleDateString()}</div>`;
+    c.onclick = (e) => { if (e.target.classList.contains("del")) { if (confirm("Delete this product?")) { imgdb.del(p.id + ":"); projects = projects.filter((x) => x.id !== p.id); store.set("pf_projects", projects); renderDashboard(); } return; } loadProject(p); };
+    list.append(c);
+  }
+  $("st-products").textContent = projects.length; $("st-words").textContent = words.toLocaleString(); $("st-sources").textContent = sources.toLocaleString(); $("st-spend").textContent = `$${spend.toFixed(2)}`;
+}
+function renderMeters() { if (forge) { $("cost").textContent = `$${forge.cost().toFixed(2)}`; $("nsources").textContent = forge.sourceList().length; proj.cost = forge.cost(); } }
+
+// ---------- forge ----------
+function newForge(snap) {
+  if (!haveKey()) throw new Error("Add your AI Omniroute API key in Settings first.");
+  const client = new Anthropic({
+    apiKey: $("key").value.trim(),
+    baseURL: "http://localhost:20128/v1",
+    dangerouslyAllowBrowser: true
+  });
+  const f = createForge(client, { model: snap?.model || $("model").value, state: snap, onStatus: (s) => setStatus(s, true), onCost: () => renderMeters() });
+  md = f.makeRenderer((t) => marked.parse(t || ""));
+  return f;
+}
+function setStatus(s, isBusy = false) { for (const id of ["status", "pstatus"]) { $(id).textContent = s; $(id).classList.toggle("busy", isBusy); } }
+function plain(e) {
+  const st = e?.status, m = String(e?.message || e);
+  if (st === 401 || /authentication|invalid x-api-key/i.test(m)) return "That key was rejected. Check your AI Omniroute API key in Settings.";
+  if (st === 402 || /credit balance|billing/i.test(m)) return "Your AI Omniroute account has no credit. Check your account, then press Continue.";
+  if (st === 429 || /rate limit/i.test(m)) return "AI Omniroute is rate-limiting your key. Wait a minute, then press Continue; it carries on where it stopped.";
+  if (st === 529 || /overloaded/i.test(m)) return "The AI service is busy right now. Wait a minute, then press Continue.";
+  if (/Failed to fetch|NetworkError|timed out/i.test(m)) return "The connection dropped. Press Continue; it carries on where it stopped.";
+  return m;
+}
+function showError(e) { console.error(e); const raw = [e?.status ? `HTTP ${e.status}` : "", e?.name || "", e?.message || String(e), e?.requestID || e?.request_id ? `request ${e.requestID || e.request_id}` : ""].filter(Boolean).join(" · "); const h = `<div class="error">${esc(plain(e))}<details style="margin-top:6px"><summary style="margin:0;font-size:12px">Details (send this to support)</summary><div style="font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-top:4px;word-break:break-all">${esc(raw)}${e?.stack ? "<br>" + esc(String(e.stack).split("\n").slice(0, 3).join(" | ")) : ""}</div></details></div>`; $("error").innerHTML = h; $("perror").innerHTML = h; setStatus("Stopped.", false); }
+function clearError() { $("error").innerHTML = ""; $("perror").innerHTML = ""; }
+async function run(fn) { if (busy) return; busy = true; clearError(); document.querySelectorAll(".btn").forEach((b) => b.disabled = true); try { await fn(); } catch (e) { showError(e); } finally { busy = false; document.querySelectorAll(".btn").forEach((b) => b.disabled = false); save(); } }
+
+// ---------- create flow ----------
+function renderSteps() {
+  const idx = STEPS.findIndex((s) => s[0] === proj.step);
+  $("steps").innerHTML = STEPS.map((s, i) => `<div class="${i === idx ? "on" : i < idx ? "done" : ""}"><b>${i + 1}. ${s[1]}</b>${i === idx ? "current" : i < idx ? "done" : "next"}</div>`).join("");
+  $("create-title").textContent = proj.name ? proj.name : "Create a product";
+}
+function goto(step) { proj.step = step; save(); renderStep(); }
+function renderStep() {
+  renderSteps(); setStatus("", false); clearError();
+  const P = $("panel"); P.innerHTML = "";
+  const st = forge?.state;
+  if (proj.step === "name") P.innerHTML = `
+    <div class="card"><h2>Name your product</h2><p class="lead">A working name. You can change the real title later.</p>
+      <div class="grid2"><div><label>Product name</label><input type="text" id="f-name" value="${esc(proj.name)}" placeholder="e.g. First Client Kit"></div>
+      <div><label>Language</label><select id="f-lang">${LANGS.map((l) => `<option ${l === proj.language ? "selected" : ""}>${l}</option>`).join("")}</select></div></div>
+      <div class="row" style="margin-top:16px"><button class="btn" id="next">Continue →</button></div></div>`;
+  if (proj.step === "uvz") P.innerHTML = `
+    <div class="card"><h2>Discover your Unique Value Zone</h2><p class="lead">Your value zone is where what you know meets what people already pay for. Pick how to start.</p>
+      <div class="grid3">
+        <div class="tile ${proj.mode === "discover" ? "on" : ""}" data-mode="discover"><div class="ico">🧭</div><b>Help me discover it</b><p>Forge searches the web for pockets around a topic, or with no topic at all.</p></div>
+        <div class="tile ${proj.mode === "own" ? "on" : ""}" data-mode="own"><div class="ico">💡</div><b>I have my own</b><p>Describe what you know, who you help, what you've done.</p></div>
+        <div class="tile ${proj.mode === "creator" ? "on" : ""}" data-mode="creator"><div class="ico">🎥</div><b>For a creator</b><p>Build for a creator's audience. Paste their titles and comments.</p></div>
+        <div class="tile ${proj.mode === "demand" ? "on" : ""}" data-mode="demand"><div class="ico">💬</div><b>From demand</b><p>Paste comments, threads and reviews where people ask for help.</p></div>
+      </div>
+      <div id="uvz-form"></div>
+      <div class="row" style="margin-top:16px"><button class="btn ghost" id="back">← Back</button><button class="btn" id="go-uvz">Generate value zones</button></div>
+    </div>
+    <div class="card" id="uvz-out" style="display:${st?.pockets ? "" : "none"}"><h2>Your value zones</h2><p class="lead">Scored on the CLEAR test out of 25: Longevity, Effort, Autonomy, Recurring, Competition. Pick one.</p><div class="zones" id="zones"></div>
+      <div class="row" style="margin-top:16px"><button class="btn" id="next" disabled>Select this zone →</button><button class="btn ghost sm" id="regen">Regenerate</button></div></div>`;
+  if (proj.step === "format") P.innerHTML = `
+    <div class="card"><h2>Choose the format</h2><p class="lead">Start with the fastest thing to test. If it sells, dig deeper.</p>
+      <div class="grid3">${FORMATS.map((f) => `<div class="tile fmt ${(proj.format || "ebook") === f.id ? "on" : ""}" data-fmt="${f.id}"><span class="badge">${(proj.format || "ebook") === f.id ? "Selected" : f.id === "ebook" ? "Fastest to test" : "Included"}</span><div class="icon">${FMT_ICON[f.id]}</div><b>${esc(f.label)}</b><p>${esc(f.blurb)}</p></div>`).join("")}</div>
+      <div class="row" style="margin-top:16px"><button class="btn ghost" id="back">← Back</button><button class="btn" id="go-map">Build the transformation map →</button></div></div>`;
+  if (proj.step === "map") P.innerHTML = `
+    <div class="card"><h2>Transformation map</h2><p class="lead">The before and after your buyer will feel, and the four stages that get them there.</p>
+      <div class="grid2"><div><table class="map" id="map-table"></table></div><div><label>Promise</label><p id="map-promise" style="margin:0 0 10px;font-size:14px"></p><label>Journey</label><ol class="journey" id="map-journey"></ol></div></div>
+      <div class="row" style="margin-top:16px"><button class="btn ghost" id="back">← Back</button><button class="btn ghost sm" id="regen">Regenerate</button><button class="btn" id="next">Looks right →</button></div></div>`;
+  if (proj.step === "refs") P.innerHTML = `
+    <div class="card"><h2>Supporting references</h2><p class="lead">Optional. Paste your own notes, method, case studies or links. Links get read. Everything you add is used as yours and cited.</p>
+      <textarea id="f-know" style="min-height:180px" placeholder="Paste text or links, one per line.">${esc(st?.input?.knowledge || "")}</textarea>
+      <div class="row" style="margin-top:16px"><button class="btn ghost" id="back">← Back</button><button class="btn" id="next">Continue →</button></div></div>`;
+  if (proj.step === "summary") { const bp = st.blueprint; P.innerHTML = `
+    <div class="card"><h2>Product summary</h2><p class="lead">Edit anything. This is what gets built.</p>
+      <div class="grid2"><div>
+        <label>Title</label><select id="s-title">${bp.titles.map((t) => `<option>${esc(t)}</option>`).join("")}</select>
+        <label>Or type your own</label><input type="text" id="s-title-custom" placeholder="">
+        <label>Subtitle</label><input type="text" id="s-sub" value="${esc(bp.subtitle)}">
+        <div class="grid2"><div><label>Price (USD)</label><input type="number" id="s-price" value="${bp.price.amount}" min="1"></div><div><label>Target words</label><input type="number" id="s-words" value="${bp.word_count}" min="3000" step="500"></div></div>
+        <p class="muted" style="margin-top:8px">${esc(bp.price.why)}</p>
+        <label>Cover colour</label><div class="swatches" id="swatches">${SWATCHES.map((c) => `<i style="background:${c}" data-c="${c}" class="${proj.accent === c ? "on" : ""}"></i>`).join("")}</div>
+        <div class="coverprev" id="coverprev" style="--paccent:${proj.accent}"><div class="k">${esc(st.format.label)}</div><h3 id="cp-title">${esc(bp.titles[0])}</h3><p id="cp-sub">${esc(bp.subtitle)}</p></div>
+      </div><div>
+        <label id="s-unit-label">Chapters</label><ul class="chlist" id="s-chapters"></ul><button class="btn ghost sm" id="add-ch">+ Add one</button>
+        <label>Bonus materials</label><textarea id="s-bonus" style="min-height:80px">${esc(bp.bonuses.join("\n"))}</textarea>
+      </div></div>
+      <details><summary>Research questions it will answer first (${bp.research_questions.length})</summary><ol class="muted" style="font-size:13px">${bp.research_questions.map((q) => `<li>${esc(q)}</li>`).join("")}</ol></details>
+      <div class="row" style="margin-top:16px"><button class="btn ghost" id="back">← Back</button><button class="btn" id="go-build">Save and build →</button></div></div>`; }
+  if (proj.step === "build") { const bp = st.blueprint; P.innerHTML = `
+    <div class="card"><h2>Building "${esc(bp.titles[0])}"</h2><p class="lead" id="build-lead">Research first, then every chapter, then the cover and store page.</p>
+      <div class="progress"><i id="bar"></i></div>
+      <ul class="clist" id="clist"></ul>
+      <details open><summary>Live</summary><div class="live" id="live"></div></details>
+      <div class="row" style="margin-top:16px"><button class="btn ghost" id="back">← Back to summary</button><button class="btn" id="go-run">${st.sections?.filter(Boolean).length ? "Continue building" : "Start"}</button><button class="btn" id="open-book" style="display:${st.pkg ? "" : "none"}">Open the product →</button></div></div>`; }
+  wire();
+}
+function wire() {
+  const st = forge?.state;
+  $("back")?.addEventListener("click", () => { const i = STEPS.findIndex((s) => s[0] === proj.step); goto(STEPS[Math.max(0, i - 1)][0]); });
+  if (proj.step === "name") $("next").onclick = () => { proj.name = $("f-name").value.trim() || "Untitled product"; proj.language = $("f-lang").value; goto("uvz"); };
+  if (proj.step === "uvz") {
+    const form = () => { const m = proj.mode; $("uvz-form").innerHTML = !m ? "" : m === "discover" ? `<label>Topic or area (optional)</label><input type="text" id="u-text" value="${esc(proj.text || "")}" placeholder="e.g. cold email for freelancers, or leave blank">`
+      : m === "own" ? `<label>What you know, can do, and who you want to help</label><textarea id="u-text" placeholder="e.g. I'm a personal trainer. I want to help new dads over 35 get fit in 20 minutes a day.">${esc(proj.text || "")}</textarea>`
+      : m === "creator" ? `<label>The creator's handle or channel</label><input type="text" id="u-creator" value="${esc(proj.creator || "")}" placeholder="@handle or a YouTube channel link"><label>Paste 5 to 20 of their video titles, captions or top comments</label><textarea id="u-text">${esc(proj.text || "")}</textarea>`
+      : `<label>Paste the demand: comments, threads, reviews, questions people keep asking</label><textarea id="u-text" style="min-height:160px">${esc(proj.text || "")}</textarea>`; };
+    form();
+    document.querySelectorAll("[data-mode]").forEach((t) => t.onclick = () => { proj.mode = t.dataset.mode; document.querySelectorAll("[data-mode]").forEach((x) => x.classList.toggle("on", x === t)); form(); });
+    const generate = () => run(async () => {
+      if (!proj.mode) throw new Error("Pick how to start.");
+      proj.text = $("u-text")?.value.trim() || ""; proj.creator = $("u-creator")?.value.trim() || "";
+      if (proj.mode === "creator" && !proj.creator) throw new Error("Add the creator's handle.");
+      if (proj.mode === "demand" && !proj.text) throw new Error("Paste some demand first.");
+      if (!forge) forge = newForge();
+      const input = { mode: proj.mode === "creator" ? "creator" : proj.mode === "demand" ? "demand" : "me", text: proj.text, creator: proj.creator, knowledge: forge.state.input?.knowledge || "", language: proj.language };
+      $("uvz-out").style.display = ""; $("zones").innerHTML = `<div class="live" id="live-uvz"></div>`;
+      const out = await forge.findPockets(input, (d) => { const l = $("live-uvz"); if (l) { l.textContent += d; l.scrollTop = l.scrollHeight; } });
+      renderZones(out); setStatus(`Found ${out.pockets.length} value zones from ${forge.sourceList().length} sources. Pick one.`, false);
+    });
+    $("go-uvz").onclick = generate; $("regen").onclick = generate;
+    if (st?.pockets) renderZones(st.pockets);
+    $("next").onclick = () => { if (proj.pocketIndex == null) return; goto("format"); };
+  }
+  if (proj.step === "format") {
+    document.querySelectorAll("[data-fmt]").forEach((t) => t.onclick = () => { proj.format = t.dataset.fmt; document.querySelectorAll("[data-fmt]").forEach((x) => { x.classList.toggle("on", x === t); x.querySelector(".badge").textContent = x === t ? "Selected" : x.dataset.fmt === "ebook" ? "Fastest to test" : "Included"; }); });
+    $("go-map").onclick = () => run(async () => { proj.format = proj.format || "ebook"; forge.state.sections = []; forge.state.pkg = null; forge.state.research = ""; await forge.blueprint(proj.pocketIndex, proj.format); goto("map"); });
+  }
+  if (proj.step === "map") {
+    const bp = st.blueprint;
+    $("map-table").innerHTML = `<thead><tr><th></th><th>Before</th><th>After</th></tr></thead>` + ["have", "do", "feel"].map((k) => `<tr><th>${k[0].toUpperCase() + k.slice(1)}</th><td>${esc(bp.before[k])}</td><td>${esc(bp.after[k])}</td></tr>`).join("");
+    $("map-promise").textContent = bp.promise; $("map-journey").innerHTML = bp.journey.map((j) => `<li><b>${esc(j.stage)}</b>: ${esc(j.milestone)}</li>`).join("");
+    $("regen").onclick = () => run(async () => { await forge.blueprint(proj.pocketIndex, proj.format || "ebook"); renderStep(); });
+    $("next").onclick = () => goto("refs");
+  }
+  if (proj.step === "refs") $("next").onclick = () => { forge.state.input.knowledge = $("f-know").value.trim(); goto("summary"); };
+  if (proj.step === "summary") {
+    const bp = st.blueprint;
+    $("s-unit-label").textContent = st.format.unit + "s";
+    const chapters = () => { $("s-chapters").innerHTML = ""; bp.sections.forEach((s, i) => { const li = document.createElement("li"); const inp = document.createElement("input"); inp.type = "text"; inp.value = s.title; inp.oninput = () => { bp.sections[i].title = inp.value; }; const del = document.createElement("button"); del.className = "btn ghost sm"; del.textContent = "✕"; del.onclick = () => { bp.sections.splice(i, 1); chapters(); }; li.append(inp, del); $("s-chapters").append(li); }); };
+    chapters();
+    $("add-ch").onclick = () => { bp.sections.push({ title: "New chapter", goal: "Edit the title; the goal is inferred from it." }); chapters(); };
+    const prev = () => { $("cp-title").textContent = $("s-title-custom").value.trim() || $("s-title").value; $("cp-sub").textContent = $("s-sub").value; };
+    $("s-title").onchange = prev; $("s-title-custom").oninput = prev; $("s-sub").oninput = prev;
+    document.querySelectorAll("#swatches i").forEach((i) => i.onclick = () => { proj.accent = i.dataset.c; document.querySelectorAll("#swatches i").forEach((x) => x.classList.toggle("on", x === i)); $("coverprev").style.setProperty("--paccent", proj.accent); });
+    $("go-build").onclick = () => run(async () => {
+      const chosen = $("s-title-custom").value.trim() || $("s-title").value; bp.titles = [chosen, ...bp.titles.filter((t) => t !== chosen)];
+      bp.subtitle = $("s-sub").value.trim() || bp.subtitle; bp.price.amount = Number($("s-price").value) || bp.price.amount; bp.word_count = Number($("s-words").value) || bp.word_count;
+      bp.bonuses = $("s-bonus").value.split("\n").map((x) => x.trim()).filter(Boolean); bp.sections = bp.sections.filter((s) => s.title.trim());
+      proj.name = chosen; goto("build");
+    });
+  }
+  if (proj.step === "build") {
+    const bp = st.blueprint, n = bp.sections.length;
+    const io = imageOpts(), withImgs = !!IMAGE_MODELS[io.model]?.provider, picSlots = withImgs ? ["cover", ...(io.scope === "cover" ? [] : bp.sections.map((_, i) => i))] : [];
+    const list = () => { $("clist").innerHTML = `<li id="c-research" class="${st.research ? "done" : ""}">Research: ${bp.research_questions.length} questions</li>` + bp.sections.map((s, i) => `<li id="c-${i}" class="${st.sections[i] ? "done" : ""}">${esc(s.title)}</li>`).join("") + `<li id="c-pkg" class="${st.pkg ? "done" : ""}">Cover, intro, store page, charter</li>` + picSlots.map((w) => `<li id="c-img-${w}" class="${st.images[w] ? "done" : ""}">${w === "cover" ? "Cover picture" : `Picture: ${esc(bp.sections[w].title)}`}</li>`).join(""); const done = (st.research ? 1 : 0) + st.sections.filter(Boolean).length + (st.pkg ? 1 : 0) + picSlots.filter((w) => st.images[w]).length; $("bar").style.width = `${done / (n + 2 + picSlots.length) * 100}%`; };
+    $("build-lead").textContent = withImgs ? `Research first, then every chapter, then the cover and store page, then ${picSlots.length} pictures (about ${forge.estimateImages(io.model, io.scope).toFixed(2)} dollars on your image key).` : "Research first, then every chapter, then the cover and store page. Add pictures in Settings if you want them.";
+    list();
+    const live = (d) => { const l = $("live"); l.textContent += d; l.scrollTop = l.scrollHeight; };
+    $("go-run").onclick = () => run(async () => {
+      $("live").textContent = "";
+      if (!st.research) { $("c-research").className = "busy"; await forge.research(live); list(); save(); }
+      const todo = bp.sections.map((_, i) => i).filter((i) => !st.sections[i]);
+      for (let k = 0; k < todo.length;) {
+        const size = (k === 0 && !st.sections.some(Boolean)) || st.dropped ? 1 : 2; // first chapter alone warms the prompt cache; after a drop, one at a time
+        const batch = todo.slice(k, k + size); k += size; $("live").textContent = ""; batch.forEach((i) => $(`c-${i}`).className = "busy");
+        try { await Promise.all(batch.map((i, j) => forge.writeSection(i, j === 0 ? live : null))); }
+        catch (e) { batch.forEach((i) => { if (!st.sections[i]) $(`c-${i}`).className = "fail"; }); if (st.dropped && !st.gaveUp) { st.gaveUp = true; k = todo.findIndex((i) => !st.sections[i]); if (k < 0) break; continue; } throw e; }
+        list(); save();
+      }
+      if (!st.pkg) { $("c-pkg").className = "busy"; await forge.packageProduct(); list(); save(); }
+      if (withImgs && imagesReady()) { forge.state.accent = proj.accent; picSlots.forEach((w) => { if (!st.images[w]) $(`c-img-${w}`).className = "busy"; }); await forge.illustrate(io, async (w, u) => { const small = await shrink(u); forge.state.images[w] = small; imgdb.set(`${proj.id}:${w}`, small); $(`c-img-${w}`).className = "done"; list(); }); }
+      proj.step = "product"; save(); renderBook(); show("product");
+    });
+    $("open-book").onclick = () => { renderBook(); show("product"); };
+  }
+}
+function renderZones(out) {
+  const Z = $("zones"); Z.innerHTML = "";
+  out.pockets.forEach((p, i) => {
+    const c = document.createElement("div"); c.className = "zone" + (proj.pocketIndex === i ? " on" : "");
+    c.innerHTML = `<div class="score">${p.score}</div>${i === out.recommended ? '<span class="rec">Recommended</span>' : ""}<h3>${esc(p.name)}</h3>
+      <p><b>Who</b> ${esc(p.person)}</p><p><b>Problem</b> ${esc(p.problem)}</p><p><b>In their words</b> ${p.buyer_words.map((w) => `“${esc(w)}”`).join(" · ")}</p>
+      <p><b>They pay for</b> ${p.paying_now.map((x) => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.what)}</a> (${esc(x.price)})`).join(", ")}</p><p><b>The gap</b> ${esc(p.gap)}</p>
+      <div class="clear">${["longevity", "effort", "autonomy", "recurring", "competition"].map((k) => `<div><b><i style="width:${p.clear[k] * 20}%"></i></b>${k[0].toUpperCase() + k.slice(1, 4)} ${p.clear[k]}</div>`).join("")}</div>`;
+    c.onclick = () => { proj.pocketIndex = i; document.querySelectorAll(".zone").forEach((x, k) => x.classList.toggle("on", k === i)); $("next").disabled = false; save(); };
+    Z.append(c);
+  });
+  if (proj.pocketIndex != null) $("next").disabled = false;
+}
+
+// ---------- book ----------
+function renderBook() {
+  const s = forge.state, bp = s.blueprint, refs = forge.sourceList(), title = bp.titles[0];
+  $("book-title").textContent = title; document.title = `${title} | digitaltechz`;
+  $("toc").innerHTML = `<a href="#b-intro">Introduction</a>` + s.sections.map((x, i) => `<a href="#b-${i}">${i + 1}. ${esc(x.title)}</a>`).join("") + `<a href="#b-refs">References</a><a href="#b-sell">Store page and charter</a>`;
+  $("book").className = "book"; $("book").innerHTML = forge.bookHTML({ by: proj.author || settings.author, accent: proj.accent || s.pkg.cover.accent, md, editable: true });
+  document.querySelectorAll("#book .rewrite").forEach((b) => b.onclick = () => run(async () => { const i = Number(b.dataset.i); setStatus(`Rewriting chapter ${i + 1}...`, true); await forge.rewriteSection(i); await forge.packageProduct(); renderBook(); setStatus("Rewritten.", false); }));
+  document.querySelectorAll("#book .reimg").forEach((b) => b.onclick = () => run(async () => { const w = b.dataset.w === "cover" ? "cover" : Number(b.dataset.w); if (!imagesReady()) throw new Error("Pick an image model in Settings first."); setStatus("Regenerating the picture...", true); delete forge.state.images[w]; const u = await shrink(await forge.renderImage(w, imageOpts())); forge.state.images[w] = u; await imgdb.set(`${proj.id}:${w}`, u); renderBook(); setStatus("Picture regenerated.", false); }));
+  const pics = Object.keys(s.images).length;
+  setStatus(`${forge.markdown().split(/\s+/).length.toLocaleString()} words · ${refs.length} sources · ${pics ? pics + " pictures · " : ""}$${forge.cost().toFixed(2)} on your keys`, false);
+}
+// The PDF comes from a clean print-only copy of the book, so the app's own styles never touch it and
+// the cover art, block fills and pictures print whether or not "Background graphics" is ticked.
+$("pdf").onclick = () => { const html = forge.bookHTML({ css: bookCSS, by: proj.author || settings.author, accent: proj.accent, md, standalone: true, autoprint: true }); const w = window.open(URL.createObjectURL(new Blob([html], { type: "text/html" })), "_blank"); if (!w) showError(new Error("Your browser blocked the print window. Allow pop-ups for this site and press Download PDF again.")); else setStatus("Print window opened. Choose \"Save as PDF\" in the print dialog.", false); };
+$("copymd").onclick = async () => { await navigator.clipboard.writeText(forge.markdown()); $("copymd").textContent = "Copied"; setTimeout(() => $("copymd").textContent = "Copy Markdown", 1500); };
+$("exporthtml").onclick = () => { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([forge.bookHTML({ css: bookCSS, by: proj.author || settings.author, accent: proj.accent, md, standalone: true })], { type: "text/html" })); a.download = `${(forge.state.blueprint.titles[0] || "product").replace(/[^\w]+/g, "-").toLowerCase()}.html`; a.click(); };
+$("exportmd").onclick = () => { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([forge.markdown()], { type: "text/markdown" })); a.download = `${(forge.state.blueprint.titles[0] || "product").replace(/[^\w]+/g, "-").toLowerCase()}.md`; a.click(); };
+$("back-create").onclick = () => { proj.step = "summary"; renderStep(); show("create"); };
+
+renderDashboard();
+</script>
+</body>
+</html>
